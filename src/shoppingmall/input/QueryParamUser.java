@@ -9,11 +9,15 @@ public class QueryParamUser extends QueryParam {
 	
 	private Long userseq;
 	private String nickname;
+	private String truename;
+	private String username;
 	private Date begindate;
 	private Date enddate;
 	private String status;
 	private String mobileno;
-	private String residence;
+	private String nation;
+	private String province;
+	private String city;
 	
 	private String certify;
 
@@ -30,6 +34,22 @@ public class QueryParamUser extends QueryParam {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public String getTruename() {
+		return truename;
+	}
+
+	public void setTruename(String truename) {
+		this.truename = truename;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Date getBegindate() {
@@ -64,12 +84,28 @@ public class QueryParamUser extends QueryParam {
 		this.mobileno = mobileno;
 	}
 
-	public String getResidence() {
-		return residence;
+	public String getNation() {
+		return nation;
 	}
 
-	public void setResidence(String residence) {
-		this.residence = residence;
+	public void setNation(String nation) {
+		this.nation = nation;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public String getCertify() {

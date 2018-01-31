@@ -59,10 +59,28 @@ public interface DAOGoods {
 	
 	/*-- admin --*/
 	
-	@Select({"select * from goods where"})
+	@Select({"<script>select a.* from goods a",
+		"left join goods_sort b on a.goodsseq=b.goodsseq where 1=1",
+		"<if test='goodsname!=null'>and a.goodsname like '%${goodsname}%'</if>",
+		"<if test='kind!=null'>and a.kind=#{kind}</if>",
+		"<if test='status!=null'>and a.status=#{status}</if>",
+		"<if test='goodsseq!=0'>and a.goodsseq=#{goodsseq}</if>",
+		"<if test='begindate!=null'>and a.createtime &gt;=#{begindate}</if>",
+		"<if test='enddate!=null'>and a.createtime &lt;=#{enddate}</if>",
+		"<if test='next!=null'>and b.ord &lt; #{minseq}</if>",
+		"<if test='prev!=null'>and b.ord &gt; #{maxseq}</if>",
+		"order by b.ord desc limit 0, ${pageSize}</script>"})
 	List<Goods> queryGoodsListByAdmin(QueryParamGoods params)throws Exception;
 
-	@Select({"select * from goods_review where"})
+	@Select({"<script>select * from goods_review where 1=1",
+		"<if test='keyword!=null'>and review like '%${keyword}%'</if>",
+		"<if test='sellerseq!=0'>and sellerseq=#{sellerseq}</if>",
+		"<if test='buyerseq!=0'>and userseq=#{buyerseq}</if>",
+		"<if test='begindate!=null'>and createtime &gt;=#{begindate}</if>",
+		"<if test='enddate!=null'>and createtime &lt;=#{enddate}</if>",
+		"<if test='next!=null'>and concat(orderseq,goodsseq) &lt; #{minseq}</if>",
+		"<if test='prev!=null'>and concat(orderseq,goodsseq) &gt; #{maxseq}</if>",
+		"order by concat(orderseq,goodsseq) desc limit 0, ${pageSize}</script>"})
 	List<GoodsReview> queryGoodsReviewListByAdmin(QueryParamGoodsReview params)throws Exception;
 
 }

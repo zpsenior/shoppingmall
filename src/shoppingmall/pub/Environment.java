@@ -8,6 +8,7 @@ import shoppingmall.dao.DAOGoodsOrder;
 import shoppingmall.dao.DAOGoodsRefund;
 import shoppingmall.dao.DAOSysMessage;
 import shoppingmall.dao.DAOUser;
+import shoppingmall.po.User;
 
 public class Environment {
 
@@ -68,5 +69,9 @@ public class Environment {
 			daoSysMessage = session.getMapper(DAOSysMessage.class);
 		}
 		return daoSysMessage;
+	}
+
+	public User getUser() {
+		return null;
 	}
 }

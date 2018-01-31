@@ -9,8 +9,9 @@ import shoppingmall.pub.POBase;
 @GraphQLObject(valueObject=true)
 public class GoodsSort extends POBase {
 	private long goodsseq;
-	private int ord;
+	private long ord;
 	private int browsecount;
+	private int saleamount;
 	private int salecount;
 	private int praisecount;
 	private long praisescore;
@@ -18,6 +19,12 @@ public class GoodsSort extends POBase {
 	private int ontop;
 	
 
+	public int getSaleamount() {
+		return saleamount;
+	}
+	public void setSaleamount(int saleamount) {
+		this.saleamount = saleamount;
+	}
 	public int getSalecount() {
 		return salecount;
 	}
@@ -30,10 +37,10 @@ public class GoodsSort extends POBase {
 	public void setGoodsseq(long goodsseq) {
 		this.goodsseq = goodsseq;
 	}
-	public int getOrd() {
+	public long getOrd() {
 		return ord;
 	}
-	public void setOrd(int ord) {
+	public void setOrd(long ord) {
 		this.ord = ord;
 	}
 	public int getBrowsecount() {

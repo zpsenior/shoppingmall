@@ -17,7 +17,12 @@ public interface DAOSysMessage {
 		"and msgseq<#{minvalue} order by msgseq limit 0, ${pageSize}"})
 	List<SysMessage> querySysMessageList(ScrollQueryMessage params)throws Exception;
 
-	@Select({"select * from sys_message where "})
+	@Select({"<script>select * from sys_message where 1=1",
+		"<if test='status!=null'>and status=#{status}</if>",
+		"<if test='kind!=null'>and kind=#{kind}</if>",
+		"<if test='next!=null'>and msgseq &lt; #{minseq}</if>",
+		"<if test='prev!=null'>and msgseq &gt; #{maxseq}</if>",
+		"order by msgseq desc limit 0, ${pageSize}</script>"})
 	List<SysMessage> querySysMessageListByAdmin(QueryParamMessage params)throws Exception;
 
 }

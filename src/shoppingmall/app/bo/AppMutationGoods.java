@@ -1,7 +1,7 @@
 package shoppingmall.app.bo;
 
-import shoppingmall.app.exception.ValidationException;
 import shoppingmall.dao.DAOGoods;
+import shoppingmall.exception.ValidationException;
 import shoppingmall.input.ParamGoods;
 import shoppingmall.po.Goods;
 import shoppingmall.pub.BOBase;

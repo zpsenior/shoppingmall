@@ -8,12 +8,15 @@ import shoppingmall.pub.POBase;
 
 @GraphQLObject(valueObject=true)
 public class UserBalance extends POBase {
+	
 	public final static String TYPE_FEE = "1";
 	public final static String TYPE_WITHDRAW_MONEY = "2";
 	public final static String TYPE_GOODS_SALE = "3";
 	public final static String TYPE_GOODS_REFUND = "4";
+	
+	public static final Long MIN_USER_BALANCE_SEQ = 2000L;
 
-	private int balseq = -1;
+	private long balseq = -1;
 	private long userseq;
 	private String type;
 	private long seq;
@@ -22,13 +25,12 @@ public class UserBalance extends POBase {
 	private int balance;
 	private String channel;
 	private String payid;
-	private String tradeno;
 	private Date paytime;
 	
-	public int getBalseq() {
+	public long getBalseq() {
 		return balseq;
 	}
-	public void setBalseq(int balseq) {
+	public void setBalseq(long balseq) {
 		this.balseq = balseq;
 	}
 	public long getUserseq() {
@@ -72,12 +74,6 @@ public class UserBalance extends POBase {
 	}
 	public void setPayid(String payid) {
 		this.payid = payid;
-	}
-	public String getTradeno() {
-		return tradeno;
-	}
-	public void setTradeno(String tradeno) {
-		this.tradeno = tradeno;
 	}
 	public Date getPaytime() {
 		return paytime;

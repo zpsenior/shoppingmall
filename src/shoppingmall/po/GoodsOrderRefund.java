@@ -1,5 +1,7 @@
 package shoppingmall.po;
 
+import java.util.Date;
+
 import graphql4j.annotation.GraphQLObject;
 import shoppingmall.pub.POBase;
 
@@ -9,11 +11,12 @@ public class GoodsOrderRefund extends POBase {
 	
 	private long orderseq;
 	private long goodsseq;
+	private long sellerseq;
 	private long buyerseq;
 	private int refundno;
 	
 	private String reason;
-	private String photo;
+	private String imgs;
 	private String status;
 	private int amount;
 	private int count;
@@ -21,9 +24,10 @@ public class GoodsOrderRefund extends POBase {
 	private String postcompid;
 	private String postorder;
 	
-	private String optr;
 	private String paychannel;
 	private String payid;
+	private Date refundtime;
+	
 	public long getOrderseq() {
 		return orderseq;
 	}
@@ -48,6 +52,12 @@ public class GoodsOrderRefund extends POBase {
 	public void setBuyerseq(long buyerseq) {
 		this.buyerseq = buyerseq;
 	}
+	public long getSellerseq() {
+		return sellerseq;
+	}
+	public void setSellerseq(long sellerseq) {
+		this.sellerseq = sellerseq;
+	}
 	public int getRefundno() {
 		return refundno;
 	}
@@ -60,11 +70,11 @@ public class GoodsOrderRefund extends POBase {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
-	public String getPhoto() {
-		return photo;
+	public String getImgs() {
+		return imgs;
 	}
-	public void setPhoto(String photo) {
-		this.photo = photo;
+	public void setImgs(String imgs) {
+		this.imgs = imgs;
 	}
 	public String getStatus() {
 		return status;
@@ -96,11 +106,11 @@ public class GoodsOrderRefund extends POBase {
 	public void setPostorder(String postorder) {
 		this.postorder = postorder;
 	}
-	public String getOptr() {
-		return optr;
+	public Date getRefundtime() {
+		return refundtime;
 	}
-	public void setOptr(String optr) {
-		this.optr = optr;
+	public void setRefundtime(Date refundtime) {
+		this.refundtime = refundtime;
 	}
 	public String getPaychannel() {
 		return paychannel;

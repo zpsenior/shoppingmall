@@ -9,7 +9,7 @@ public class UserAddress extends POBase {
 	private long userseq;
 	private long addrno;
 	private String recipients;
-	private String residence;
+	private String addr;
 	private String nation;
 	private String province;
 	private String city;
@@ -34,11 +34,11 @@ public class UserAddress extends POBase {
 	public void setRecipients(String recipients) {
 		this.recipients = recipients;
 	}
-	public String getResidence() {
-		return residence;
+	public String getAddr() {
+		return addr;
 	}
-	public void setResidence(String residence) {
-		this.residence = residence;
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
 	public String getNation() {
 		return nation;

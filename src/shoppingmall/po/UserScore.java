@@ -11,11 +11,12 @@ public class UserScore extends POBase {
 	private int saleamount;
 	private int salecount;
 	
-	private int praisescore;
+	private long praisescore;
 	private int praisecount;
 	
-	private int buyerpraise;
+	private long buyerpraise;
 	private int buyercount;
+	
 	public long getUserseq() {
 		return userseq;
 	}
@@ -34,10 +35,10 @@ public class UserScore extends POBase {
 	public void setSalecount(int salecount) {
 		this.salecount = salecount;
 	}
-	public int getPraisescore() {
+	public long getPraisescore() {
 		return praisescore;
 	}
-	public void setPraisescore(int praisescore) {
+	public void setPraisescore(long praisescore) {
 		this.praisescore = praisescore;
 	}
 	public int getPraisecount() {
@@ -46,10 +47,10 @@ public class UserScore extends POBase {
 	public void setPraisecount(int praisecount) {
 		this.praisecount = praisecount;
 	}
-	public int getBuyerpraise() {
+	public long getBuyerpraise() {
 		return buyerpraise;
 	}
-	public void setBuyerpraise(int buyerpraise) {
+	public void setBuyerpraise(long buyerpraise) {
 		this.buyerpraise = buyerpraise;
 	}
 	public int getBuyercount() {

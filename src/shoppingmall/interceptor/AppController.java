@@ -21,7 +21,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import shoppingmall.app.bo.AppMutation;
 import shoppingmall.app.bo.AppQuery;
-import shoppingmall.app.exception.ValidationException;
+import shoppingmall.exception.ValidationException;
 import shoppingmall.pub.Environment;
 
 public class AppController extends HandlerInterceptorAdapter {

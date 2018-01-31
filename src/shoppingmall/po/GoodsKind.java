@@ -6,16 +6,16 @@ import shoppingmall.pub.POBase;
 @GraphQLObject(valueObject=true)
 public class GoodsKind extends POBase {
 
-	private String kind;
+	private int kind;
 	private String name;
 	private String url;
 	private int ord;                                                                                                                                                               
 	private String status;
 	
-	public String getKind() {
+	public int getKind() {
 		return kind;
 	}
-	public void setKind(String kind) {
+	public void setKind(int kind) {
 		this.kind = kind;
 	}
 	public String getName() {

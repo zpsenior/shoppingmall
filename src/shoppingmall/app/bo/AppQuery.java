@@ -6,8 +6,8 @@ import graphql4j.annotation.GraphQLObject;
 
 import java.util.List;
 
-import shoppingmall.app.exception.ValidationException;
 import shoppingmall.dao.DAOUser;
+import shoppingmall.exception.ValidationException;
 import shoppingmall.input.ScrollQueryGoods;
 import shoppingmall.input.ScrollQueryGoodsOrder;
 import shoppingmall.input.ScrollQueryGoodsRefund;
@@ -110,8 +110,8 @@ public class AppQuery extends BOBase{
 	}
 	
 	@GraphQLField("shoppingCarts")
-	public List<GoodsShoppingCart> queryGoodsShoppingCart(@GraphQLArgument("userseq") long userseq)throws Exception{
-		List<GoodsShoppingCart> list = getEnvironment().getDAOGoodsOrder().queryGoodsShoppingCart(userseq);
+	public List<GoodsShoppingCart> queryGoodsShoppingCartList(@GraphQLArgument("userseq") long userseq)throws Exception{
+		List<GoodsShoppingCart> list = getEnvironment().getDAOGoodsOrder().queryGoodsShoppingCartList(userseq);
 		bindEnvironment(list);
 		return list;
 	}

@@ -9,6 +9,12 @@ import shoppingmall.po.UserBalance;
 
 public interface DAOBalance {
 
+	void addUserBalance(UserBalance balance)throws Exception;
+
+	UserBalance getLastUserBalance(long userseq)throws Exception;
+
+	Long getMaxBalanceseq()throws Exception;
+
 	@Select({"select * from user_balance where balseq=#{value}"})
 	UserBalance getUserBalance(long balseq)throws Exception;
 

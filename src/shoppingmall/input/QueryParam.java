@@ -31,5 +31,17 @@ public abstract class QueryParam {
 		this.page = page;
 	}
 
-	
+	public String getNext(){
+		if("next".equals(page)){
+			return "1";
+		}
+		return null;
+	}
+
+	public String getPrev(){
+		if("prev".equals(page)){
+			return "1";
+		}
+		return null;
+	}
 }

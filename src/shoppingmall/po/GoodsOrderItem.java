@@ -14,10 +14,18 @@ public class GoodsOrderItem extends POBase {
 	private long goodsseq;
 	private String goodsname;
 	private long sellerseq;
-	private long postseq;
 	private int count;
 	private int price;
 	private String status;
+	
+	public GoodsOrderItem(){}
+	
+	public GoodsOrderItem(Goods goods){
+		this.goodsseq = goods.getGoodsseq();
+		this.goodsname = goods.getGoodsname();
+		this.sellerseq = goods.getSellerseq();
+		this.price = goods.getPrice();
+	}
 	
 	public long getOrderseq() {
 		return orderseq;
@@ -37,17 +45,11 @@ public class GoodsOrderItem extends POBase {
 	public void setGoodsname(String goodsname) {
 		this.goodsname = goodsname;
 	}
-	public long getPostseq() {
-		return postseq;
-	}
 	public long getSellerseq() {
 		return sellerseq;
 	}
 	public void setSellerseq(long sellerseq) {
 		this.sellerseq = sellerseq;
-	}
-	public void setPostseq(long postseq) {
-		this.postseq = postseq;
 	}
 	public int getCount() {
 		return count;
