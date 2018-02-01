@@ -20,8 +20,8 @@ public class Goods extends POBase {
 	private long parentseq;
 	private String goodsname;
 	private String descript;
-	private String coverpath;
-	private String videopath;
+	private String[] coverpath;
+	private String[] videopath;
 	private int price;
 	private int postfee;
 	private String goodskind;
@@ -57,16 +57,16 @@ public class Goods extends POBase {
 	public void setDescript(String descript) {
 		this.descript = descript;
 	}
-	public String getCoverpath() {
+	public String[] getCoverpath() {
 		return coverpath;
 	}
-	public void setCoverpath(String coverpath) {
+	public void setCoverpath(String[] coverpath) {
 		this.coverpath = coverpath;
 	}
-	public String getVideopath() {
+	public String[] getVideopath() {
 		return videopath;
 	}
-	public void setVideopath(String videopath) {
+	public void setVideopath(String[] videopath) {
 		this.videopath = videopath;
 	}
 	public int getPrice() {

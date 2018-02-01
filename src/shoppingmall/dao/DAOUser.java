@@ -46,6 +46,26 @@ public interface DAOUser {
 	@Select({"select * from user_review where userseq=#{userseq} ",
 		"and orderseq<#{minvalue} order by orderseq limit 0, ${pageSize}"})
 	List<UserReview> queryUserReviewList(ScrollQueryUserReview params)throws Exception;
+	
+
+	@Insert({"insert into user_review(",
+		"orderseq,",
+		"goodsseq,",
+		"sellerseq,",
+		"userseq,",
+		"score,",
+		"review,",
+		"imgs,",
+		"createtime)values(",
+		"#{orderseq},",
+		"#{goodsseq},",
+		"#{sellerseq},",
+		"#{userseq},",
+		"#{score},",
+		"#{review},",
+		"#{imgs},",
+		"sysdate())"})
+	void addUserReview(UserReview ur)throws Exception;
 
 	@Select({"select * from user_auth where userseq=#{value}"})
 	UserAuth getUserAuth(Long userseq)throws Exception;

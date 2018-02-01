@@ -11,7 +11,7 @@ public class UserReview extends POBase {
 	private long userseq;
 	private int score;
 	private String review;
-	private String imgs;
+	private String[] imgs;
 	private String status;
 	public long getOrderseq() {
 		return orderseq;
@@ -49,10 +49,10 @@ public class UserReview extends POBase {
 	public void setReview(String review) {
 		this.review = review;
 	}
-	public String getImgs() {
+	public String[] getImgs() {
 		return imgs;
 	}
-	public void setImgs(String imgs) {
+	public void setImgs(String[] imgs) {
 		this.imgs = imgs;
 	}
 	public String getStatus() {

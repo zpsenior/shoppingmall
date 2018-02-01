@@ -31,9 +31,11 @@ import shoppingmall.po.GoodsOrder;
 import shoppingmall.po.GoodsOrderItem;
 import shoppingmall.po.GoodsOrderRefund;
 import shoppingmall.po.GoodsShoppingCart;
+import shoppingmall.po.GoodsReview;
 import shoppingmall.po.Pay;
 import shoppingmall.po.PayState;
 import shoppingmall.po.UserAddress;
+import shoppingmall.po.UserReview;
 import shoppingmall.pub.BOBase;
 import shoppingmall.pub.Environment;
 import shoppingmall.pub.Refund;
@@ -290,11 +292,6 @@ public class AppMutationGoodsOrder extends BOBase {
 		throw new DataValidateException("the.order.not.belong.to.u", String.valueOf(orderseq));
 	}
 	
-	@GraphQLField("applyArbitration")
-	public boolean applyArbitration(@GraphQLArgument("orderseq") long orderseq)throws Exception{
-		return false;
-	}
-	
 	@GraphQLField("deliveryOrder")
 	public boolean deliveryOrder(@GraphQLArgument("orderseq") long orderseq, @GraphQLArgument("postorder") String postorder, @GraphQLArgument("postcomp") String postcomp)throws Exception{
 		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
@@ -412,12 +409,39 @@ public class AppMutationGoodsOrder extends BOBase {
 	
 	@GraphQLField("reviewGoods")
 	public boolean reviewGoods(@GraphQLArgument("review") ParamGoodsReview review)throws Exception{
-		return false;
+		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
+		long userseq = getEnvironment().getUser().getUserseq();
+		GoodsOrder order = daoGoodsOrder.getGoodsOrder(review.getOrderseq());
+		if(order == null){
+			throw new DataValidateException("invalid.goods.order");
+		}
+		if(order.getBuyerseq() != userseq){
+			throw new DataValidateException("goods.order.not.owner.you");
+		}
+		GoodsReview gr = (GoodsReview)review;
+		gr.setBuyerseq(userseq);
+		gr.setUserseq(order.getSellerseq());
+		daoGoodsOrder.addGoodsReview(gr);
+		return true;
 	}
 	
 	@GraphQLField("reviewBuyer")
 	public boolean reviewBuyer(@GraphQLArgument("review") ParamUserReview review)throws Exception{
-		return false;
+		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
+		DAOUser daoUser = getEnvironment().getDAOUser();
+		long userseq = getEnvironment().getUser().getUserseq();
+		GoodsOrder order = daoGoodsOrder.getGoodsOrder(review.getOrderseq());
+		if(order == null){
+			throw new DataValidateException("invalid.goods.order");
+		}
+		if(order.getSellerseq() != userseq){
+			throw new DataValidateException("goods.order.not.owner.you");
+		}
+		UserReview ur = (UserReview)review;
+		ur.setSellerseq(userseq);
+		ur.setUserseq(order.getBuyerseq());
+		daoUser.addUserReview(ur);
+		return true;
 	}
 
 }

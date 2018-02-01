@@ -7,6 +7,17 @@ import shoppingmall.pub.POBase;
 
 @GraphQLObject(valueObject=true)
 public class GoodsOrderRefund extends POBase {
+	
+
+	public final static String REFUND_APPLY = "0";
+	public final static String REFUND_REFUSE = "2";
+	public final static String REFUND_ACCEPT = "3";
+	public final static String REFUND_SUCCESS = "4";
+	public final static String REFUND_OFF_SERVICE = "5";
+	public final static String REFUND_CANNEL = "6";
+	
+	public static final Long MIN_GOODS_ORDER_REFUND_SEQ = 3888L;
+	
 	private long refundseq;
 	
 	private long orderseq;
@@ -16,6 +27,7 @@ public class GoodsOrderRefund extends POBase {
 	private int refundno;
 	
 	private String reason;
+	private String refusereason;
 	private String imgs;
 	private String status;
 	private int amount;
@@ -69,6 +81,12 @@ public class GoodsOrderRefund extends POBase {
 	}
 	public void setReason(String reason) {
 		this.reason = reason;
+	}
+	public String getRefusereason() {
+		return refusereason;
+	}
+	public void setRefusereason(String refusereason) {
+		this.refusereason = refusereason;
 	}
 	public String getImgs() {
 		return imgs;

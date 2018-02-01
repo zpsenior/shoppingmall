@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import shoppingmall.po.GoodsReview;
 import shoppingmall.input.QueryParamGoodsOrder;
 import shoppingmall.input.ScrollQueryGoodsOrder;
 import shoppingmall.po.GoodsOrder;
@@ -108,6 +109,25 @@ public interface DAOGoodsOrder {
 	
 	@Select({"select * from goods_order_item where orderseq=#{value}"})
 	List<GoodsOrderItem> queryGoodsOrderItemList(long orderseq)throws Exception;
+
+	@Insert({"insert into goods_review(",
+		"orderseq,",
+		"goodsseq,",
+		"buyerseq,",
+		"userseq,",
+		"score,",
+		"review,",
+		"imgs,",
+		"createtime)values(",
+		"#{orderseq},",
+		"#{goodsseq},",
+		"#{buyerseq},",
+		"#{userseq},",
+		"#{score},",
+		"#{review},",
+		"#{imgs},",
+		"sysdate())"})
+	void addGoodsReview(GoodsReview review)throws Exception;
 	
 	
 	/*-- admin --*/

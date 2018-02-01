@@ -13,9 +13,11 @@ import shoppingmall.po.User;
 public class Environment {
 
 	private SqlSession session;
+	private User user;
 	
-	public Environment(SqlSession session){
+	public Environment(SqlSession session, User user){
 		this.session = session;
+		this.user = user;
 	}
 
 	public SqlSession getSession() {
@@ -72,6 +74,6 @@ public class Environment {
 	}
 
 	public User getUser() {
-		return null;
+		return user;
 	}
 }
