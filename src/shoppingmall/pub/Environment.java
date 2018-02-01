@@ -2,6 +2,7 @@ package shoppingmall.pub;
 
 import org.apache.ibatis.session.SqlSession;
 
+import shoppingmall.cache.Cache;
 import shoppingmall.dao.DAOBalance;
 import shoppingmall.dao.DAOGoods;
 import shoppingmall.dao.DAOGoodsOrder;
@@ -75,5 +76,9 @@ public class Environment {
 
 	public User getUser() {
 		return user;
+	}
+
+	public Cache getCache() {
+		return null;
 	}
 }

@@ -6,6 +6,7 @@ import shoppingmall.po.User;
 @GraphQLInput
 public class ParamUser extends User {
 	private String checkcode;
+	private String oldpwd;
 	private String password;
 	private String confirmpwd;
 
@@ -15,6 +16,14 @@ public class ParamUser extends User {
 
 	public void setCheckcode(String checkcode) {
 		this.checkcode = checkcode;
+	}
+
+	public String getOldpwd() {
+		return oldpwd;
+	}
+
+	public void setOldpwd(String oldpwd) {
+		this.oldpwd = oldpwd;
 	}
 
 	public String getPassword() {

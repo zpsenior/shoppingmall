@@ -35,6 +35,7 @@ create table user_auth(
 	wpay			varchar(40),           #微信账号
 	certify			char(1) default '0',   #0-未认证,1-已付款等待认证,2-已认证
 	certifytime		datetime,              #认证时间
+	updatetime      datetime
 	primary key(userseq)
 );
 

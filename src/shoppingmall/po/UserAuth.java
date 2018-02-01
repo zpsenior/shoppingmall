@@ -27,6 +27,8 @@ public class UserAuth extends POBase {
 	
 	private String certify;
 	private Date certifytime;
+	private Date updatetime;
+	
 	public long getUserseq() {
 		return userseq;
 	}
@@ -105,4 +107,11 @@ public class UserAuth extends POBase {
 	public void setCertifytime(Date certifytime) {
 		this.certifytime = certifytime;
 	}
+	public Date getUpdatetime() {
+		return updatetime;
+	}
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
+	}
+	
 }

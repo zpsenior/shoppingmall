@@ -8,6 +8,9 @@ import shoppingmall.pub.POBase;
 
 @GraphQLObject(valueObject=true)
 public class User extends POBase {
+	
+	public final static String STATUS_OK     = "0";
+	public final static String STATUS_SHIELD = "2";
 
 	private long   userseq;
 	private String loginname;

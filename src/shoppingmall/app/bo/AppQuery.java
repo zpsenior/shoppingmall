@@ -6,6 +6,9 @@ import graphql4j.annotation.GraphQLObject;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import shoppingmall.cache.Cache;
 import shoppingmall.dao.DAOUser;
 import shoppingmall.exception.ValidationException;
 import shoppingmall.input.ScrollQueryGoods;
@@ -28,14 +31,69 @@ import shoppingmall.po.UserAuth;
 import shoppingmall.po.UserBalance;
 import shoppingmall.po.SysMessage;
 import shoppingmall.po.UserReview;
+import shoppingmall.po.WXUser;
 import shoppingmall.pub.BOBase;
 import shoppingmall.pub.Environment;
+import shoppingmall.wauth.AppConst;
+import shoppingmall.wauth.WAuthGetSessionRequest;
+import shoppingmall.wauth.WAuthGetSessionResponse;
+import shoppingmall.wauth.WAuthService;
+import shoppingmall.wxpay.MD5;
 
 @GraphQLObject("Query")
 public class AppQuery extends BOBase{
+	
+	private final Logger log = Logger.getLogger(this.getClass());
 
 	public AppQuery(Environment env) {
 		super(env);
+	}
+	
+	@GraphQLField("loginFromWeiXin")
+	public WXUser loginFromWeiXin(@GraphQLArgument("code") String code)throws Exception{
+		WAuthGetSessionRequest req = new WAuthGetSessionRequest();
+		req.setCode(code);
+		WAuthService serv = new WAuthService(AppConst.getAppId(), AppConst.getAppSecret());
+		WAuthGetSessionResponse resp = serv.getSession(req);
+		String openid = resp.getOpenid();
+		String unionid = resp.getUnionid();
+		log.debug("openid:" + openid);
+		log.debug("session_key:" + resp.getSession_key());
+		log.debug("unionid:" + unionid);
+		WXUser wx = new WXUser();
+		wx.setOpenid(openid);
+		DAOUser daoUser = getEnvironment().getDAOUser();
+		User user = daoUser.getUserByOpenid(openid);
+		if(user == null){
+			return wx;
+		}
+		String value = resp.getOpenid() + ":" + resp.getSession_key() + ":" + System.currentTimeMillis();
+		String sessionid = MD5.encode(value);
+		Cache cache = getEnvironment().getCache();
+		cache.setWXSession(sessionid, value);
+		wx.setSessionid(sessionid);
+		wx.setUser(user);
+		return wx;
+	}
+	
+	@GraphQLField("checkSessionInWeiXin")
+	public User checkSessionInWeiXin(@GraphQLArgument("sessionid") String sessionid)throws Exception{
+		Cache cache = getEnvironment().getCache();
+		String value = cache.getWXSession(sessionid);
+		if(value == null){
+			return null;
+		}
+		int pos = value.indexOf(':');
+		if(pos <= 0){
+			return null;
+		}
+		String openid = value.substring(0, pos);
+		DAOUser daoUser = getEnvironment().getDAOUser();
+		User user = daoUser.getUserByOpenid(openid);
+		if(user == null){
+			return null;
+		}
+		return user;
 	}
 
 	@GraphQLField("checkRegister")

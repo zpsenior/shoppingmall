@@ -17,19 +17,67 @@ import shoppingmall.po.UserScore;
 
 public interface DAOUser {
 
-	@Insert({"insert into user()values()"})
+	@Insert({"insert into user(",
+		"userseq,",
+	 	"loginname,",
+	 	"nationcode,",
+	 	"mobileno,",
+	 	"openid,",
+	 	"nickname,",
+	 	"headpoto,",
+	 	"nation,",
+	 	"province,",
+	 	"city,",
+	 	"platform,",
+	 	"device,",
+	 	"createtime)values(",
+	 	"#{userseq},",
+	 	"#{loginname},",
+	 	"#{nationcode},",
+	 	"#{mobileno},",
+	 	"#{openid},",
+	 	"#{nickname},",
+	 	"#{headpoto},",
+	 	"#{nation},",
+	 	"#{province},",
+	 	"#{city},",
+	 	"#{platform},",
+	 	"#{device},",
+ 		"sysdate())"})
 	void addUser(User user)throws Exception;
 
-	@Update({"update user set ",
-		"where userseq=#{userseq}"})
+	@Update({"<script>update user set ",
+	 	"<if test='loginname!=null'>loginname=#{loginname},</if>",
+	 	"<if test='nickname!=null'>nickname=#{nickname},</if>",
+	 	"<if test='nation!=null'>nation=#{nation},</if>",
+	 	"<if test='province!=null'>province=#{province},</if>",
+	 	"<if test='city!=null'>city=#{city},</if>",
+	 	"<if test='headpoto!=null'>headpoto=#{headpoto},</if>",
+	 	"<if test='platform!=null'>platform=#{platform},</if>",
+	 	"<if test='device!=null'>device=#{device},</if>",
+	 	"lastlogin=sysdate()",
+		"where userseq=#{userseq}</script>"})
 	void updateUser(User user)throws Exception;
+	
+	@Update({"update user set openid=#{openid} where userseq=#{userseq}"})
+	void addOpenidInUser(User user)throws Exception;
 
-	@Insert({"insert into user_auth(userseq,password)values(#{userseq},#{password})"})
+	@Insert({"insert into user_auth(userseq,password,updatetime)values(#{userseq},#{password},sysdate())"})
 	void addUserAuth(UserAuth auth)throws Exception;
 
-	@Update({"update user_auth set ",
-		"where userseq=#{userseq}"})
+	@Update({"<script>update user_auth set ",
+		"<if test='backchannel!=null'>backchannel=#{backchannel},</if>",
+		"<if test='bankname!=null'>bankname=#{bankname},</if>",
+		"<if test='username!=null'>username=#{username},</if>",
+		"<if test='cardno!=null'>cardno=#{cardno},</if>",
+		"<if test='alipay!=null'>alipay=#{alipay},</if>",
+		"<if test='wpay!=null'>wpay=#{wpay},</if>",
+		"updatetime=sysdate()",
+		"where userseq=#{userseq}</script>"})
 	void updateUserAuth(UserAuth user)throws Exception;
+
+	@Update({"update user_auth set password=#{password} where userseq=#{userseq}"})
+	void changePassword(UserAuth auth)throws Exception;
 
 	@Insert({"insert into user_score(userseq)values(#{userseq})"})
 	void addUserScore(UserScore score)throws Exception;
@@ -37,11 +85,17 @@ public interface DAOUser {
 	@Select({"select * from user where userseq=#{value}"})
 	User getUserBySeq(Long userseq)throws Exception;
 
-	@Select({"select * from user where nickname=#{nickname}"})
+	@Select({"select * from user where nickname=#{value}"})
 	User getUserByNickname(String nickname)throws Exception;
 
-	@Select({"select * from user where mobileno=#{mobileno}"})
+	@Select({"select * from user where loginname=#{value}"})
+	User getUserByLoginname(String loginname)throws Exception;
+
+	@Select({"select * from user where mobileno=#{value}"})
 	User getUserByMobileno(String mobileno)throws Exception;
+
+	@Select({"select * from user where openid=#{value}"})
+	User getUserByOpenid(String openid)throws Exception;
 
 	@Select({"select * from user_review where userseq=#{userseq} ",
 		"and orderseq<#{minvalue} order by orderseq limit 0, ${pageSize}"})
