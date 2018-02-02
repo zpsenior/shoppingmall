@@ -14,8 +14,12 @@ import graphql4j.type.GraphQLSchemaLoader;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.session.SqlSession;
+
+import shoppingmall.cache.Cache;
 import shoppingmall.exception.ValidationException;
 import shoppingmall.interceptor.Const;
+import shoppingmall.pub.Environment;
 
 public abstract class MainController implements Const {
 
@@ -67,4 +71,17 @@ public abstract class MainController implements Const {
 			opt.bindValue(name, value);
 		}
 	}
+	
+	protected Environment getEnvironment(HttpServletRequest request)throws Exception{
+		Environment env = (Environment)request.getAttribute(GRAPHQL_ENVIRONMENT);
+		if(env == null){
+			SqlSession sec = (SqlSession)request.getAttribute(DB_SESSION);
+			Cache cache = (Cache)request.getAttribute(DB_CACHE);
+			env = new Environment(sec, cache, getUser(request));
+			request.setAttribute(GRAPHQL_ENVIRONMENT, env);
+		}
+		return env;
+	}
+
+	protected abstract Object getUser(HttpServletRequest request)throws Exception;
 }

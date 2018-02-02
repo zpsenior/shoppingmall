@@ -33,91 +33,91 @@ public class AdminQuery  extends BOBase {
 
 	@GraphQLField("userAuth")
 	public UserAuth getUserAuth(@GraphQLArgument("userseq") long userseq)throws Exception{
-		UserAuth auth = getEnvironment().getDAOUser().getUserAuth(userseq);
+		UserAuth auth = getDAO().getDAOUser().getUserAuth(userseq);
 		bindEnvironment(auth);
 		return auth;
 	}
 
 	@GraphQLField("userAuths")
 	public List<UserAuth> queryUserAuthList(@GraphQLArgument("params") QueryParamUser params)throws Exception{
-		List<UserAuth> list = getEnvironment().getDAOUser().queryUserAuthList(params);
+		List<UserAuth> list = getDAO().getDAOUser().queryUserAuthList(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("user")
 	public User getUser(@GraphQLArgument("userseq") long userseq)throws Exception{
-		User user = getEnvironment().getDAOUser().getUserBySeq(userseq);
+		User user = getDAO().getDAOUser().getUserBySeq(userseq);
 		bindEnvironment(user);
 		return user;
 	}
 	
 	@GraphQLField("users")
 	public List<User> queryUserList(@GraphQLArgument("params") QueryParamUser params)throws Exception{
-		List<User> list = getEnvironment().getDAOUser().queryUserList(params);
+		List<User> list = getDAO().getDAOUser().queryUserList(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("userReviews")
 	public List<UserReview> queryUserReviewList(@GraphQLArgument("params") QueryParamUserReview params)throws Exception{
-		List<UserReview> list = getEnvironment().getDAOUser().queryUserReviewListByAdmin(params);
+		List<UserReview> list = getDAO().getDAOUser().queryUserReviewListByAdmin(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("goodsList")
 	public List<Goods> queryGoodsList(@GraphQLArgument("params") QueryParamGoods params)throws Exception{
-		List<Goods> list = getEnvironment().getDAOGoods().queryGoodsListByAdmin(params);
+		List<Goods> list = getDAO().getDAOGoods().queryGoodsListByAdmin(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("goods")
 	public Goods getGoods(@GraphQLArgument("goodsseq") long goodsseq)throws Exception{
-		Goods goods = getEnvironment().getDAOGoods().getGoods(goodsseq);
+		Goods goods = getDAO().getDAOGoods().getGoods(goodsseq);
 		bindEnvironment(goods);
 		return goods;
 	}
 	
 	@GraphQLField("goodOrder")
 	public GoodsOrder getGoodsOrder(@GraphQLArgument("orderseq") long orderseq)throws Exception{
-		GoodsOrder order = getEnvironment().getDAOGoodsOrder().getGoodsOrder(orderseq);
+		GoodsOrder order = getDAO().getDAOGoodsOrder().getGoodsOrder(orderseq);
 		bindEnvironment(order);
 		return order;
 	}
 	
 	@GraphQLField("goodsOrders")
 	public List<GoodsOrder> queryGoodsOrderList(@GraphQLArgument("params") QueryParamGoodsOrder params)throws Exception{
-		List<GoodsOrder> list = getEnvironment().getDAOGoodsOrder().queryGoodsOrderListByAdmin(params);
+		List<GoodsOrder> list = getDAO().getDAOGoodsOrder().queryGoodsOrderListByAdmin(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("goodsRefunds")
 	public List<GoodsOrderRefund> queryGoodsRefundList(@GraphQLArgument("params") QueryParamGoodsRefund params)throws Exception{
-		List<GoodsOrderRefund> list = getEnvironment().getDAOGoodsRefund().queryGoodsRefundListByAdmin(params);
+		List<GoodsOrderRefund> list = getDAO().getDAOGoodsRefund().queryGoodsRefundListByAdmin(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("goodsReviews")
 	public List<GoodsReview> queryGoodsReviewList(@GraphQLArgument("params") QueryParamGoodsReview params)throws Exception{
-		List<GoodsReview> list = getEnvironment().getDAOGoods().queryGoodsReviewListByAdmin(params);
+		List<GoodsReview> list = getDAO().getDAOGoods().queryGoodsReviewListByAdmin(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("sysMessage")
 	public List<SysMessage> querySysMessageList(@GraphQLArgument("params") QueryParamMessage params)throws Exception{
-		List<SysMessage> list = getEnvironment().getDAOSysMessage().querySysMessageListByAdmin(params);
+		List<SysMessage> list = getDAO().getDAOSysMessage().querySysMessageListByAdmin(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("goodsSales")
 	public List<GoodsOrderItem> queryGoodsSaleList(@GraphQLArgument("params") QueryParamGoodsOrder params)throws Exception{
-		List<GoodsOrderItem> list = getEnvironment().getDAOGoodsOrder().queryGoodsSaleListByAdmin(params);
+		List<GoodsOrderItem> list = getDAO().getDAOGoodsOrder().queryGoodsSaleListByAdmin(params);
 		bindEnvironment(list);
 		return list;
 	}

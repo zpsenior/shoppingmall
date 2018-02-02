@@ -2,12 +2,15 @@ package shoppingmall.po;
 
 import graphql4j.annotation.GraphQLObject;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import shoppingmall.pub.POBase;
 
 @GraphQLObject(valueObject=true)
-public class User extends POBase {
+public class User extends POBase implements Serializable {
+
+	private static final long serialVersionUID = 8471939739912904324L;
 	
 	public final static String STATUS_OK     = "0";
 	public final static String STATUS_SHIELD = "2";

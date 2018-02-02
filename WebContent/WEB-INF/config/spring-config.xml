@@ -24,6 +24,7 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
 	<mvc:interceptors>
 		<bean class="shoppingmall.interceptor.DBInterceptor">
 			<property name="factory" ref="sqlSessionFactory"/>
+			<property name="cache" ref="cache"/>
 		</bean>
 	</mvc:interceptors>
 
@@ -86,6 +87,27 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
      <property name="dataSource" ref="dataSource"/> 
      <!--configLocation属性指定mybatis的核心配置文件--> 
      <property name="configLocation" value="classpath:Configuration.xml" /> 
+  </bean>
+  
+  <bean id="cache" class="shoppingmall.cache.Cache" init-method="init">
+      <property name="factory" ref="sqlSessionFactory" />
+      <property name="mc" ref="memCacheClient" />
+  </bean>
+  
+  <bean id="memCacheClient" class="net.spy.memcached.spring.MemcachedClientFactoryBean">
+    <property name="servers" value="${shoppingmall.memcache.url}"/>
+    <property name="protocol" value="BINARY"/>
+    <property name="transcoder">
+      <bean class="net.spy.memcached.transcoders.SerializingTranscoder">
+        <property name="compressionThreshold" value="1024"/>
+      </bean>
+    </property>
+    <property name="opTimeout" value="1000"/>
+    <property name="timeoutExceptionThreshold" value="1998"/>
+    <property name="hashAlg" value="KETAMA_HASH"/>
+    <property name="locatorType" value="CONSISTENT"/> 
+    <property name="failureMode" value="Redistribute"/>
+    <property name="useNagleAlgorithm" value="false"/>
   </bean>
 
 </beans>

@@ -5,6 +5,9 @@ import shoppingmall.po.User;
 
 @GraphQLInput
 public class ParamUser extends User {
+
+	private static final long serialVersionUID = -4057668964770353966L;
+	
 	private String checkcode;
 	private String oldpwd;
 	private String password;

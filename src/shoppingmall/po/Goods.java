@@ -2,13 +2,16 @@ package shoppingmall.po;
 
 import graphql4j.annotation.GraphQLObject;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import shoppingmall.pub.POBase;
 
 @GraphQLObject(valueObject=true)
-public class Goods extends POBase {
+public class Goods extends POBase implements Serializable {
+	
+	private static final long serialVersionUID = 5764087360132824110L;
 	
 	public static final String STATUS_OK = "0";
 	public static final String STATUS_OFFLINE = "1";
@@ -131,19 +134,19 @@ public class Goods extends POBase {
 	}
 	
 	public User getSeller()throws Exception{
-		User user = getEnvironment().getDAOUser().getUserBySeq(sellerseq);
+		User user = getDAO().getDAOUser().getUserBySeq(sellerseq);
 		user.bindEnvironment(getEnvironment());
 		return user;
 	}
 	
 	public List<Goods> getItems()throws Exception{
-		List<Goods> list = getEnvironment().getDAOGoods().queryGoodsItemList(goodsseq);
+		List<Goods> list = getDAO().getDAOGoods().queryGoodsItemList(goodsseq);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	public GoodsSort getGoodsSort()throws Exception{
-		GoodsSort sort = getEnvironment().getDAOGoods().getGoodsSort(goodsseq);
+		GoodsSort sort = getDAO().getDAOGoods().getGoodsSort(goodsseq);
 		sort.bindEnvironment(getEnvironment());
 		return sort;
 	}

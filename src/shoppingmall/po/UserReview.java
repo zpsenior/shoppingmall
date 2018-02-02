@@ -63,7 +63,7 @@ public class UserReview extends POBase {
 	}
 	
 	public User getSeller()throws Exception{
-		User user = getEnvironment().getDAOUser().getUserBySeq(sellerseq);
+		User user = getDAO().getDAOUser().getUserBySeq(sellerseq);
 		return user;
 	}
 }

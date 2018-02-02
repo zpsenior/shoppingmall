@@ -19,7 +19,7 @@ public class AppMutationGoods extends BOBase {
 
 	@GraphQLField("publish")
 	public boolean publish(@GraphQLArgument("goods") ParamGoods goods)throws Exception{
-		DAOGoods daoGoods = getEnvironment().getDAOGoods();
+		DAOGoods daoGoods = getDAO().getDAOGoods();
 		long seq = nextGoodsseq(daoGoods);
 		goods.setGoodsseq(seq);
 		daoGoods.addGoods(goods);
@@ -37,7 +37,7 @@ public class AppMutationGoods extends BOBase {
 
 	@GraphQLField("online")
 	public boolean online(@GraphQLArgument("goodsseq") long goodsseq)throws Exception{
-		DAOGoods daoGoods = getEnvironment().getDAOGoods();
+		DAOGoods daoGoods = getDAO().getDAOGoods();
 		Goods goods = daoGoods.getGoods(goodsseq);
 		if(goods == null){
 			throw new ValidationException("not.exist.goods", goodsseq);
@@ -52,7 +52,7 @@ public class AppMutationGoods extends BOBase {
 	
 	@GraphQLField("offline")
 	public boolean offline(@GraphQLArgument("goodsseq") long goodsseq)throws Exception{
-		DAOGoods daoGoods = getEnvironment().getDAOGoods();
+		DAOGoods daoGoods = getDAO().getDAOGoods();
 		Goods goods = daoGoods.getGoods(goodsseq);
 		if(goods == null){
 			throw new ValidationException("not.exist.goods", goodsseq);
@@ -67,7 +67,7 @@ public class AppMutationGoods extends BOBase {
 	
 	@GraphQLField("remove")
 	public boolean remove(@GraphQLArgument("goodsseq") long goodsseq)throws Exception{
-		DAOGoods daoGoods = getEnvironment().getDAOGoods();
+		DAOGoods daoGoods = getDAO().getDAOGoods();
 		Goods goods = daoGoods.getGoods(goodsseq);
 		if(goods == null){
 			throw new ValidationException("not.exist.goods", goodsseq);
@@ -82,7 +82,7 @@ public class AppMutationGoods extends BOBase {
 	
 	@GraphQLField("modify")
 	public boolean modify(@GraphQLArgument("goods") ParamGoods goods)throws Exception{
-		DAOGoods daoGoods = getEnvironment().getDAOGoods();
+		DAOGoods daoGoods = getDAO().getDAOGoods();
 		long goodsseq = goods.getGoodsseq();
 		if(daoGoods.getGoods(goodsseq) == null){
 			throw new ValidationException("not.exist.goods", goodsseq);
@@ -93,7 +93,7 @@ public class AppMutationGoods extends BOBase {
 	
 	@GraphQLField("refresh")
 	public boolean refresh(@GraphQLArgument("goodsseq") long goodsseq)throws Exception{
-		DAOGoods daoGoods = getEnvironment().getDAOGoods();
+		DAOGoods daoGoods = getDAO().getDAOGoods();
 		Goods goods = daoGoods.getGoods(goodsseq);
 		if(goods == null){
 			throw new ValidationException("not.exist.goods", goodsseq);

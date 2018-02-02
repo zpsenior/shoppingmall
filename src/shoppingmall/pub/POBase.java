@@ -3,6 +3,8 @@ package shoppingmall.pub;
 import java.util.Date;
 import java.util.List;
 
+import shoppingmall.dao.DAO;
+
 public abstract class POBase {
 	private Date createtime;
 
@@ -15,6 +17,7 @@ public abstract class POBase {
 	}
 	
 	private Environment env;
+	private DAO dao;
 	
 	protected Environment getEnvironment(){
 		return env;
@@ -30,5 +33,12 @@ public abstract class POBase {
 				po.bindEnvironment(env);
 			}
 		}
+	}
+
+	protected DAO getDAO() {
+		if(dao == null){
+			dao = new DAO(env.getSession());
+		}
+		return dao;
 	}
 }

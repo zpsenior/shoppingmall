@@ -30,8 +30,8 @@ public class AppMutationGoodsRefund extends BOBase {
 
 	@GraphQLField("applyRefund")
 	public boolean applyRefund(@GraphQLArgument("refund") ParamGoodsOrderRefund refund)throws Exception{
-		DAOGoodsRefund daoGoodsRefund = getEnvironment().getDAOGoodsRefund();
-		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
+		DAOGoodsRefund daoGoodsRefund = getDAO().getDAOGoodsRefund();
+		DAOGoodsOrder daoGoodsOrder = getDAO().getDAOGoodsOrder();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrder order = daoGoodsOrder.getGoodsOrder(refund.getOrderseq());
 		if(order == null){
@@ -57,7 +57,7 @@ public class AppMutationGoodsRefund extends BOBase {
 	
 	@GraphQLField("cancelRefund")
 	public boolean cancelRefund(@GraphQLArgument("refundseq") long refundseq)throws Exception{
-		DAOGoodsRefund daoGoodsRefund = getEnvironment().getDAOGoodsRefund();
+		DAOGoodsRefund daoGoodsRefund = getDAO().getDAOGoodsRefund();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrderRefund refund = daoGoodsRefund.getGoodsRefund(refundseq);
 		if(refund == null){
@@ -75,7 +75,7 @@ public class AppMutationGoodsRefund extends BOBase {
 	
 	@GraphQLField("refuseRefund")
 	public boolean refuseRefund(@GraphQLArgument("refundseq") long refundseq, @GraphQLArgument("reason") String reason)throws Exception{
-		DAOGoodsRefund daoGoodsRefund = getEnvironment().getDAOGoodsRefund();
+		DAOGoodsRefund daoGoodsRefund = getDAO().getDAOGoodsRefund();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrderRefund refund = daoGoodsRefund.getGoodsRefund(refundseq);
 		if(refund == null){
@@ -95,7 +95,7 @@ public class AppMutationGoodsRefund extends BOBase {
 
 	@GraphQLField("applyArbitration")
 	public boolean applyArbitration(@GraphQLArgument("refundseq") long refundseq)throws Exception{
-		DAOGoodsRefund daoGoodsRefund = getEnvironment().getDAOGoodsRefund();
+		DAOGoodsRefund daoGoodsRefund = getDAO().getDAOGoodsRefund();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrderRefund refund = daoGoodsRefund.getGoodsRefund(refundseq);
 		if(refund == null){
@@ -113,7 +113,7 @@ public class AppMutationGoodsRefund extends BOBase {
 	
 	@GraphQLField("acceptRefund")
 	public boolean acceptRefund(@GraphQLArgument("refundseq") long refundseq)throws Exception{
-		DAOGoodsRefund daoGoodsRefund = getEnvironment().getDAOGoodsRefund();
+		DAOGoodsRefund daoGoodsRefund = getDAO().getDAOGoodsRefund();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrderRefund refund = daoGoodsRefund.getGoodsRefund(refundseq);
 		if(refund == null){
@@ -132,7 +132,7 @@ public class AppMutationGoodsRefund extends BOBase {
 	@GraphQLField("fillRefundPost")
 	public boolean fillRefundPost(@GraphQLArgument("refundseq") long refundseq, @GraphQLArgument("postorder") String postorder, @GraphQLArgument("postcomp") String postcomp)throws Exception{
 
-		DAOGoodsRefund daoGoodsRefund = getEnvironment().getDAOGoodsRefund();
+		DAOGoodsRefund daoGoodsRefund = getDAO().getDAOGoodsRefund();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrderRefund refund = daoGoodsRefund.getGoodsRefund(refundseq);
 		if(refund == null){
@@ -152,7 +152,7 @@ public class AppMutationGoodsRefund extends BOBase {
 	
 	@GraphQLField("confirmRefund")
 	public boolean confirmRefund(@GraphQLArgument("refundseq") long refundseq)throws Exception{
-		DAOGoodsRefund daoGoodsRefund = getEnvironment().getDAOGoodsRefund();
+		DAOGoodsRefund daoGoodsRefund = getDAO().getDAOGoodsRefund();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrderRefund refund = daoGoodsRefund.getGoodsRefund(refundseq);
 		if(refund == null){

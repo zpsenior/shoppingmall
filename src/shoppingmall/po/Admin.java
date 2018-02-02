@@ -5,6 +5,8 @@ import shoppingmall.pub.POBase;
 
 @GraphQLObject(valueObject=true)
 public class Admin extends POBase {
+
+	public final static String ADMININFO = "__adminInfo__";
 	
 	private long adminseq;
 	private String adminname;

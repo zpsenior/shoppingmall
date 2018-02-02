@@ -11,24 +11,27 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import shoppingmall.po.User;
-import shoppingmall.pub.Environment;
+import shoppingmall.cache.Cache;
 
 public class DBInerceptor extends HandlerInterceptorAdapter implements Const {
 	
 	private final Logger log = Logger.getLogger(this.getClass());
 	
 	private SqlSessionFactory factory;
+	private Cache cache;
 	
 	public void setFactory(SqlSessionFactory factory) {
 		this.factory = factory;
 	}
 	
+	public void setCache(Cache cache) {
+		this.cache = cache;
+	}
+
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)throws Exception{
 		SqlSession sec = factory.openSession();
-		User user = getUser(request);
-		Environment env = new Environment(sec, user);
-		request.setAttribute(GRAPHQL_ENVIRONMENT, env);
+		request.setAttribute(DB_SESSION, sec);
+		request.setAttribute(DB_CACHE, cache);
 		HandlerMethod m = (HandlerMethod)handler;
 		String methodName = m.getMethod().getName();
 		if("Mutation".equals(methodName)){
@@ -38,25 +41,19 @@ public class DBInerceptor extends HandlerInterceptorAdapter implements Const {
 		return true;
 	}
 
-	private User getUser(HttpServletRequest request)throws Exception{
-		// TODO 自动生成的方法存根
-		return null;
-	}
-
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelandview)throws Exception{
-		Environment env = (Environment)request.getAttribute(GRAPHQL_ENVIRONMENT);
+		SqlSession sec = (SqlSession)request.getAttribute(DB_SESSION);
 		Boolean doCommit = (Boolean)request.getAttribute(DB_TRANSACTION);
 		if(doCommit != null && !doCommit){
-			env.getSession().commit();
+			sec.commit();
 			request.setAttribute(DB_TRANSACTION, true);
 		}
 	}
 	
 
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception)throws Exception{
+		SqlSession sec = (SqlSession)request.getAttribute(DB_SESSION);
 		Boolean doCommit = (Boolean)request.getAttribute(DB_TRANSACTION);
-		Environment env = (Environment)request.getAttribute(GRAPHQL_ENVIRONMENT);
-		SqlSession sec = env.getSession();
 		if(doCommit != null && !doCommit){
 			sec.rollback();
 		}

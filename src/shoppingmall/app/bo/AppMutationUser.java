@@ -36,7 +36,7 @@ public class AppMutationUser extends BOBase {
 			ForeignMessageServer fmServ = new ForeignMessageServer(request);
 			fmServ.verifyAuthMessage(nationcode, mobileno, checkcode);
 		}*/
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOUser daoUser = getDAO().getDAOUser();
 		User user = daoUser.getUserByMobileno(param.getMobileno());
 		if(user == null){
 			return false;
@@ -59,7 +59,7 @@ public class AppMutationUser extends BOBase {
 		if(!pwd.equals(confirmpwd)){
 			throw new DataValidateException("diff.confirm.password");
 		}
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOUser daoUser = getDAO().getDAOUser();
 		User user = daoUser.getUserByOpenid(param.getOpenid());
 		if(user != null){
 			throw new DataValidateException("your.wx.account.had.be.bind", user.getMobileno());
@@ -75,7 +75,7 @@ public class AppMutationUser extends BOBase {
 	
 	@GraphQLField("register")
 	public boolean register(@GraphQLArgument("user") ParamUser user)throws Exception{
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOUser daoUser = getDAO().getDAOUser();
 		if(user.getNationcode() == null){
 			user.setNationcode("86");
 		}
@@ -97,7 +97,7 @@ public class AppMutationUser extends BOBase {
 	
 	@GraphQLField("login")
 	public User login(@GraphQLArgument("param") ParamUser param)throws Exception{
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOUser daoUser = getDAO().getDAOUser();
 		User user = daoUser.getUserByLoginname(param.getLoginname());
 		if(user == null){
 			throw new DataValidateException("error.login.name");
@@ -126,7 +126,7 @@ public class AppMutationUser extends BOBase {
 	@GraphQLField("changePassword")
 	public boolean changePassword(@GraphQLArgument("user") ParamUser param)throws Exception{
 		User user = getEnvironment().getUser();
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOUser daoUser = getDAO().getDAOUser();
 		String oldpwd = param.getOldpwd();
 		UserAuth auth = daoUser.getUserAuth(user.getUserseq()); 
 		String pwd = auth.getPassword();
@@ -145,7 +145,7 @@ public class AppMutationUser extends BOBase {
 	
 	@GraphQLField("updateUserInfo")
 	public boolean updateUserInfo(@GraphQLArgument("user") ParamUser user)throws Exception{
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOUser daoUser = getDAO().getDAOUser();
 		if(user.getNickname() != null){
 			if(daoUser.getUserByNickname(user.getNickname())!=null){
 				throw new DataValidateException("duplicate.nick.name", user.getNickname());
@@ -162,13 +162,8 @@ public class AppMutationUser extends BOBase {
 	
 	@GraphQLField("updateUserAuth")
 	public boolean updateUserAuth(@GraphQLArgument("auth") ParamUserAuth auth)throws Exception{
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOUser daoUser = getDAO().getDAOUser();
 		daoUser.updateUserAuth(auth);
 		return true;
-	}
-	
-	@GraphQLField("withdrawCash")
-	public boolean withdrawCash(@GraphQLArgument("userseq") Long userseq, @GraphQLArgument("amount") int amount)throws Exception{
-		return false;
 	}
 }

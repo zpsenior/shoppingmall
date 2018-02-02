@@ -71,12 +71,12 @@ public class GoodsOrderItem extends POBase {
 	}
 	
 	public User getSeller()throws Exception{
-		User user = getEnvironment().getDAOUser().getUserBySeq(sellerseq);
+		User user = getDAO().getDAOUser().getUserBySeq(sellerseq);
 		return user;
 	}
 
 	public Goods getGoods()throws Exception{
-		Goods goods = getEnvironment().getDAOGoods().getGoods(goodsseq);
+		Goods goods = getDAO().getDAOGoods().getGoods(goodsseq);
 		goods.bindEnvironment(getEnvironment());
 		return goods;
 	}
@@ -85,7 +85,7 @@ public class GoodsOrderItem extends POBase {
 		ScrollQueryGoodsRefund params = new ScrollQueryGoodsRefund();
 		params.setOrderseq(orderseq);
 		params.setGoodsseq(goodsseq);
-		List<GoodsOrderRefund> list = getEnvironment().getDAOGoodsRefund().queryGoodsRefundList(params);
+		List<GoodsOrderRefund> list = getDAO().getDAOGoodsRefund().queryGoodsRefundList(params);
 		bindEnvironment(list);
 		return list;
 	}

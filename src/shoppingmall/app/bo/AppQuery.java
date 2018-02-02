@@ -62,7 +62,7 @@ public class AppQuery extends BOBase{
 		log.debug("unionid:" + unionid);
 		WXUser wx = new WXUser();
 		wx.setOpenid(openid);
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOUser daoUser = getDAO().getDAOUser();
 		User user = daoUser.getUserByOpenid(openid);
 		if(user == null){
 			return wx;
@@ -88,7 +88,7 @@ public class AppQuery extends BOBase{
 			return null;
 		}
 		String openid = value.substring(0, pos);
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOUser daoUser = getDAO().getDAOUser();
 		User user = daoUser.getUserByOpenid(openid);
 		if(user == null){
 			return null;
@@ -98,12 +98,12 @@ public class AppQuery extends BOBase{
 
 	@GraphQLField("checkRegister")
 	public boolean checkRegister(@GraphQLArgument("nationcode") String nationcode, @GraphQLArgument("mobileno") String mobileno)throws Exception{
-		return getEnvironment().getDAOUser().getUserByMobileno(mobileno) == null;
+		return getDAO().getDAOUser().getUserByMobileno(mobileno) == null;
 	}
 
 	@GraphQLField("user")
 	public User getUser(@GraphQLArgument(value="userseq", notNull=false) Long userseq, @GraphQLArgument(value="nickname", notNull=false) String nickname, @GraphQLArgument(value="mobileno", notNull=false) String mobileno)throws Exception{
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOUser daoUser = getDAO().getDAOUser();
 		User user;
 		if(userseq != null){
 			user = daoUser.getUserBySeq(userseq);
@@ -120,126 +120,126 @@ public class AppQuery extends BOBase{
 	
 	@GraphQLField("userAuth")
 	public UserAuth getUserAuth(@GraphQLArgument("userseq") Long userseq)throws Exception{
-		UserAuth auth = getEnvironment().getDAOUser().getUserAuth(userseq);
+		UserAuth auth = getDAO().getDAOUser().getUserAuth(userseq);
 		bindEnvironment(auth);
 		return auth;
 	}
 	
 	@GraphQLField("addressList")
 	public List<UserAddress> queryUserAddressList(@GraphQLArgument("userseq") long userseq)throws Exception{
-		List<UserAddress> list = getEnvironment().getDAOUser().queryUserAddressList(userseq);
+		List<UserAddress> list = getDAO().getDAOUser().queryUserAddressList(userseq);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("address")
 	public UserAddress getUserAddress(@GraphQLArgument("addrno") long addrno)throws Exception{
-		UserAddress addr = getEnvironment().getDAOUser().getUserAddress(addrno);
+		UserAddress addr = getDAO().getDAOUser().getUserAddress(addrno);
 		bindEnvironment(addr);
 		return addr;
 	}
 	
 	@GraphQLField("balance")
 	public UserBalance getUserBalance(@GraphQLArgument("balseq") long balseq)throws Exception{
-		UserBalance bal = getEnvironment().getDAOBalance().getUserBalance(balseq);
+		UserBalance bal = getDAO().getDAOBalance().getUserBalance(balseq);
 		bindEnvironment(bal);
 		return bal;
 	}
 	
 	@GraphQLField("balances")
 	public List<UserBalance> queryUserBalanceList(@GraphQLArgument("params") ScrollQueryUserBalance params)throws Exception{
-		List<UserBalance> list = getEnvironment().getDAOBalance().queryUserBalanceList(params);
+		List<UserBalance> list = getDAO().getDAOBalance().queryUserBalanceList(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("message")
 	public SysMessage getSysMessage(@GraphQLArgument("msgseq") long msgseq)throws Exception{
-		SysMessage msg = getEnvironment().getDAOSysMessage().getSysMessage(msgseq);
+		SysMessage msg = getDAO().getDAOSysMessage().getSysMessage(msgseq);
 		bindEnvironment(msg);
 		return msg;
 	}
 	
 	@GraphQLField("messages")
 	public List<SysMessage> querySysMessageList(@GraphQLArgument("params") ScrollQueryMessage params)throws Exception{
-		List<SysMessage> list = getEnvironment().getDAOSysMessage().querySysMessageList(params);
+		List<SysMessage> list = getDAO().getDAOSysMessage().querySysMessageList(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("shoppingCarts")
 	public List<GoodsShoppingCart> queryGoodsShoppingCartList(@GraphQLArgument("userseq") long userseq)throws Exception{
-		List<GoodsShoppingCart> list = getEnvironment().getDAOGoodsOrder().queryGoodsShoppingCartList(userseq);
+		List<GoodsShoppingCart> list = getDAO().getDAOGoodsOrder().queryGoodsShoppingCartList(userseq);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("goodsKinds")
 	public List<GoodsKind> queryGoodsKindList()throws Exception{
-		List<GoodsKind> list = getEnvironment().getDAOGoods().queryGoodsKindList();
+		List<GoodsKind> list = getDAO().getDAOGoods().queryGoodsKindList();
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("goodsList")
 	public List<Goods> queryGoodsList(@GraphQLArgument("params") ScrollQueryGoods params)throws Exception{
-		List<Goods> list = getEnvironment().getDAOGoods().queryGoodsList(params);
+		List<Goods> list = getDAO().getDAOGoods().queryGoodsList(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("goods")
 	public Goods getGoods(@GraphQLArgument("goodsseq") long goodsseq)throws Exception{
-		Goods goods = getEnvironment().getDAOGoods().getGoods(goodsseq);
+		Goods goods = getDAO().getDAOGoods().getGoods(goodsseq);
 		bindEnvironment(goods);
 		return goods;
 	}
 
 	@GraphQLField("goodsReviews")
 	public List<GoodsReview> queryGoodsReviewList(@GraphQLArgument("params") ScrollQueryGoodsReview params)throws Exception{
-		List<GoodsReview> list = getEnvironment().getDAOGoods().queryGoodsReviewList(params);
+		List<GoodsReview> list = getDAO().getDAOGoods().queryGoodsReviewList(params);
 		bindEnvironment(list);
 		return list;
 	}
 
 	@GraphQLField("userReviews")
 	public List<UserReview> queryUserReviewList(@GraphQLArgument("params") ScrollQueryUserReview params)throws Exception{
-		List<UserReview> list =  getEnvironment().getDAOUser().queryUserReviewList(params);
+		List<UserReview> list =  getDAO().getDAOUser().queryUserReviewList(params);
 		bindEnvironment(list);
 		return list;
 	}
 	
 	@GraphQLField("goodsOrders")
 	public List<GoodsOrder> queryGoodsOrderList(@GraphQLArgument("params") ScrollQueryGoodsOrder params)throws Exception{
-		List<GoodsOrder> list = getEnvironment().getDAOGoodsOrder().queryGoodsOrderList(params);
+		List<GoodsOrder> list = getDAO().getDAOGoodsOrder().queryGoodsOrderList(params);
 		bindEnvironment(list);
 		return list;
 	}
 
 	@GraphQLField("goodsOrder")
 	public GoodsOrder getGoodsOrder(@GraphQLArgument("orderseq") long orderseq)throws Exception{
-		GoodsOrder order = getEnvironment().getDAOGoodsOrder().getGoodsOrder(orderseq);
+		GoodsOrder order = getDAO().getDAOGoodsOrder().getGoodsOrder(orderseq);
 		bindEnvironment(order);
 		return order;
 	}
 	
 	@GraphQLField("goodsRefunds")
 	public List<GoodsOrderRefund> queryGoodsRefundList(@GraphQLArgument("params") ScrollQueryGoodsRefund params)throws Exception{
-		List<GoodsOrderRefund> list = getEnvironment().getDAOGoodsRefund().queryGoodsRefundList(params);
+		List<GoodsOrderRefund> list = getDAO().getDAOGoodsRefund().queryGoodsRefundList(params);
 		bindEnvironment(list);
 		return list;
 	}
 
 	@GraphQLField("goodsRefund")
 	public GoodsOrderRefund getGoodsRefund(@GraphQLArgument("refundseq") long refundseq)throws Exception{
-		GoodsOrderRefund refund = getEnvironment().getDAOGoodsRefund().getGoodsRefund(refundseq);
+		GoodsOrderRefund refund = getDAO().getDAOGoodsRefund().getGoodsRefund(refundseq);
 		bindEnvironment(refund);
 		return refund;
 	}
 	
 	@GraphQLField("goodsSales")
 	public List<GoodsOrderItem> queryGoodsSaleList(@GraphQLArgument("params") ScrollQueryGoodsOrder params)throws Exception{
-		List<GoodsOrderItem> list = getEnvironment().getDAOGoodsOrder().queryGoodsSaleList(params);
+		List<GoodsOrderItem> list = getDAO().getDAOGoodsOrder().queryGoodsSaleList(params);
 		bindEnvironment(list);
 		return list;
 	}

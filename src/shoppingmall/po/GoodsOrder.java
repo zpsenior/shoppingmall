@@ -211,7 +211,7 @@ public class GoodsOrder extends POBase {
 	}
 
 	public User getBuyer()throws Exception{
-		User user = getEnvironment().getDAOUser().getUserBySeq(buyerseq);
+		User user = getDAO().getDAOUser().getUserBySeq(buyerseq);
 		user.bindEnvironment(getEnvironment());
 		return user;
 	}

@@ -1,6 +1,8 @@
 package shoppingmall.app.bo;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +14,8 @@ import shoppingmall.wxpay.WPayQueryOrderResponse;
 import shoppingmall.wxpay.WPayService;
 import shoppingmall.wxpay.WPayBuildOrderRequest;
 import shoppingmall.wxpay.WPayBuildOrderResponse;
+import shoppingmall.alipay.APayAccountTransferRequest;
+import shoppingmall.alipay.APayAccountTransferResponse;
 import shoppingmall.alipay.APayService;
 import shoppingmall.alipay.APayTradeAppPayRequest;
 import shoppingmall.alipay.APayTradeQueryRequest;
@@ -35,6 +39,7 @@ import shoppingmall.po.GoodsReview;
 import shoppingmall.po.Pay;
 import shoppingmall.po.PayState;
 import shoppingmall.po.UserAddress;
+import shoppingmall.po.UserAuth;
 import shoppingmall.po.UserReview;
 import shoppingmall.pub.BOBase;
 import shoppingmall.pub.Environment;
@@ -54,9 +59,9 @@ public class AppMutationGoodsOrder extends BOBase {
 
 	@GraphQLField("prepay")
 	public Pay prepay(@GraphQLArgument("param") ParamPrepay param)throws Exception{
-		DAOGoods daoGoods = getEnvironment().getDAOGoods();
-		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOGoods daoGoods = getDAO().getDAOGoods();
+		DAOGoodsOrder daoGoodsOrder = getDAO().getDAOGoodsOrder();
+		DAOUser daoUser = getDAO().getDAOUser();
 		UserAddress addr = daoUser.getUserAddress(param.getAddrno());
 		if(addr == null){
 			throw new DataValidateException("the.addr.no.can.not.find");
@@ -175,7 +180,7 @@ public class AppMutationGoodsOrder extends BOBase {
 
 	@GraphQLField("payAgain")
 	public Pay payAgain(@GraphQLArgument("orderseq") long orderseq, @GraphQLArgument("channel") String channel)throws Exception{
-		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
+		DAOGoodsOrder daoGoodsOrder = getDAO().getDAOGoodsOrder();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrder order = daoGoodsOrder.getGoodsOrder(orderseq);
 		if(order == null){
@@ -195,7 +200,7 @@ public class AppMutationGoodsOrder extends BOBase {
 	
 	@GraphQLField("checkOrderPayed")
 	public PayState checkPayed(@GraphQLArgument("outTradeNo") String outTradeNo, @GraphQLArgument("channel") String channel)throws Exception{
-		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
+		DAOGoodsOrder daoGoodsOrder = getDAO().getDAOGoodsOrder();
 		long userseq = getEnvironment().getUser().getUserseq();
 		long orderseq = GoodsOrder.parseSeq(outTradeNo);
 		GoodsOrder order = daoGoodsOrder.getGoodsOrder(orderseq);
@@ -233,7 +238,7 @@ public class AppMutationGoodsOrder extends BOBase {
 	
 	@GraphQLField("refuseOrder")
 	public boolean refuseOrder(@GraphQLArgument("orderseq") long orderseq, @GraphQLArgument("reason") String reason)throws Exception{
-		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
+		DAOGoodsOrder daoGoodsOrder = getDAO().getDAOGoodsOrder();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrder order = daoGoodsOrder.getGoodsOrder(orderseq);
 		if(order == null){
@@ -255,7 +260,7 @@ public class AppMutationGoodsOrder extends BOBase {
 	
 	@GraphQLField("closeOrder")
 	public boolean closeOrder(@GraphQLArgument("orderseq") long orderseq)throws Exception{
-		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
+		DAOGoodsOrder daoGoodsOrder = getDAO().getDAOGoodsOrder();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrder order = daoGoodsOrder.getGoodsOrder(orderseq);
 		if(order == null){
@@ -273,7 +278,7 @@ public class AppMutationGoodsOrder extends BOBase {
 	
 	@GraphQLField("removeOrder")
 	public boolean removeOrder(@GraphQLArgument("orderseq") long orderseq)throws Exception{
-		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
+		DAOGoodsOrder daoGoodsOrder = getDAO().getDAOGoodsOrder();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrder order = daoGoodsOrder.getGoodsOrder(orderseq);
 		if(order == null){
@@ -294,7 +299,7 @@ public class AppMutationGoodsOrder extends BOBase {
 	
 	@GraphQLField("deliveryOrder")
 	public boolean deliveryOrder(@GraphQLArgument("orderseq") long orderseq, @GraphQLArgument("postorder") String postorder, @GraphQLArgument("postcomp") String postcomp)throws Exception{
-		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
+		DAOGoodsOrder daoGoodsOrder = getDAO().getDAOGoodsOrder();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrder order = daoGoodsOrder.getGoodsOrder(orderseq);
 		if(order == null){
@@ -314,9 +319,9 @@ public class AppMutationGoodsOrder extends BOBase {
 	
 	@GraphQLField("confirmOrder")
 	public boolean confirmOrder(@GraphQLArgument("orderseq") long orderseq)throws Exception{
-		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
-		DAOGoodsRefund daoGoodsRefund = getEnvironment().getDAOGoodsRefund();
-		DAOBalance daoBalance = getEnvironment().getDAOBalance();
+		DAOGoodsOrder daoGoodsOrder = getDAO().getDAOGoodsOrder();
+		DAOGoodsRefund daoGoodsRefund = getDAO().getDAOGoodsRefund();
+		DAOBalance daoBalance = getDAO().getDAOBalance();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrder order = daoGoodsOrder.getGoodsOrder(orderseq);
 		if(order == null){
@@ -393,7 +398,7 @@ public class AppMutationGoodsOrder extends BOBase {
 
 	private Long getMaxBalanceseq(DAOBalance dao)throws Exception{
 		Long max = dao.getMaxBalanceseq();
-		if(max == null){
+		if(max == null|| max == 0){
 			max = UserBalance.MIN_USER_BALANCE_SEQ;
 		}
 		return max;
@@ -407,9 +412,56 @@ public class AppMutationGoodsOrder extends BOBase {
 		return bal;
 	}
 	
+	private SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+	
+	private SimpleDateFormat dfAli = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+	@GraphQLField("withdrawCash")
+	public boolean withdrawCash(@GraphQLArgument("amount") int amount)throws Exception{
+		long userseq = getEnvironment().getUser().getUserseq();
+		DAOBalance app = getDAO().getDAOBalance();
+		UserBalance bal = app.getLastUserBalance(userseq);
+		if(bal.getBalance() < amount){
+			throw new DataValidateException("withdraw.money.more.than.balance", String.valueOf(bal.getBalance()));
+		}
+		DAOUser bo = getDAO().getDAOUser();
+		UserAuth auth = bo.getUserAuth(userseq);
+		if(auth.getAlipay() == null||"".equals(auth.getAlipay())){
+			throw new DataValidateException("u.not.set.alipay.account");
+		}
+		String outTradeNo = "WD_" + userseq + "_" + df.format(new Date());
+		UserBalance balance = new UserBalance();
+		balance.setUserseq(userseq);
+		balance.setType(UserBalance.TYPE_WITHDRAW_MONEY);
+		balance.setDescript("withdraw cash");
+		balance.setAmount(amount);
+		balance.setBalance(bal.getBalance() - amount);
+		balance.setChannel("A");
+		balance.setPayid(outTradeNo);
+		addUserBalance(app, balance);		
+		APayAccountTransferRequest req = new APayAccountTransferRequest();
+		req.setOut_biz_no(outTradeNo);
+		req.setPayee_type("ALIPAY_LOGONID");
+		req.setPayee_account(auth.getAlipay());
+		BigDecimal bi = new BigDecimal(String.valueOf(amount));
+		bi = bi.divide(Currency.ONE_HUNDRED);
+		req.setAmount(bi.toString());
+		req.setPayee_real_name(auth.getUsername());
+		req.setPayer_show_name("XXXX TECH");
+		req.setRemark("withdraw cash");
+		APayService serv = new APayService();
+		APayAccountTransferResponse resp = serv.transferAccount(req);
+		if(!"10000".equals(resp.getCode())){
+			throw new DataValidateException("withdraw.money.error", resp.getMsg(), resp.getSub_code(), resp.getSub_msg());
+		}
+		balance.setPaytime(dfAli.parse(resp.getPay_date()));
+		app.updatePaytime(balance);
+		return true;
+	}
+	
 	@GraphQLField("reviewGoods")
 	public boolean reviewGoods(@GraphQLArgument("review") ParamGoodsReview review)throws Exception{
-		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
+		DAOGoodsOrder daoGoodsOrder = getDAO().getDAOGoodsOrder();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrder order = daoGoodsOrder.getGoodsOrder(review.getOrderseq());
 		if(order == null){
@@ -427,8 +479,8 @@ public class AppMutationGoodsOrder extends BOBase {
 	
 	@GraphQLField("reviewBuyer")
 	public boolean reviewBuyer(@GraphQLArgument("review") ParamUserReview review)throws Exception{
-		DAOGoodsOrder daoGoodsOrder = getEnvironment().getDAOGoodsOrder();
-		DAOUser daoUser = getEnvironment().getDAOUser();
+		DAOGoodsOrder daoGoodsOrder = getDAO().getDAOGoodsOrder();
+		DAOUser daoUser = getDAO().getDAOUser();
 		long userseq = getEnvironment().getUser().getUserseq();
 		GoodsOrder order = daoGoodsOrder.getGoodsOrder(review.getOrderseq());
 		if(order == null){
