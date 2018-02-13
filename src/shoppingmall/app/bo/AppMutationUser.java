@@ -10,7 +10,6 @@ import shoppingmall.po.User;
 import shoppingmall.po.UserAuth;
 import shoppingmall.po.UserScore;
 import shoppingmall.pub.BOBase;
-import shoppingmall.pub.Environment;
 import graphql4j.annotation.GraphQLArgument;
 import graphql4j.annotation.GraphQLField;
 import graphql4j.annotation.GraphQLObject;
@@ -19,10 +18,6 @@ import graphql4j.annotation.GraphQLObject;
 public class AppMutationUser extends BOBase {
 	
 	private final Logger log = Logger.getLogger(this.getClass());
-	
-	public AppMutationUser(Environment env) {
-		super(env);
-	}
 	
 	@GraphQLField("bindInWeiXin")
 	public boolean bindInWeiXin(@GraphQLArgument("param") ParamUser param)throws Exception{

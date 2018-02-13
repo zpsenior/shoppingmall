@@ -1,17 +1,12 @@
 package shoppingmall.admin.bo;
 
 import shoppingmall.pub.BOBase;
-import shoppingmall.pub.Environment;
 import graphql4j.annotation.GraphQLArgument;
 import graphql4j.annotation.GraphQLField;
 import graphql4j.annotation.GraphQLObject;
 
 @GraphQLObject("MUser")
 public class AdminMutationUser extends BOBase {
-	
-	public AdminMutationUser(Environment env) {
-		super(env);
-	}
 
 	@GraphQLField("shieldUser")
 	public boolean shieldUser(@GraphQLArgument("userseq") long userseq)throws Exception{

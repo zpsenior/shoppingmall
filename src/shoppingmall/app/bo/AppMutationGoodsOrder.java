@@ -42,7 +42,6 @@ import shoppingmall.po.UserAddress;
 import shoppingmall.po.UserAuth;
 import shoppingmall.po.UserReview;
 import shoppingmall.pub.BOBase;
-import shoppingmall.pub.Environment;
 import shoppingmall.pub.Refund;
 import graphql4j.annotation.GraphQLArgument;
 import graphql4j.annotation.GraphQLField;
@@ -52,10 +51,6 @@ import graphql4j.annotation.GraphQLObject;
 public class AppMutationGoodsOrder extends BOBase {
 	
 	protected final Logger log = Logger.getLogger(this.getClass());
-	
-	public AppMutationGoodsOrder(Environment env) {
-		super(env);
-	}
 
 	@GraphQLField("prepay")
 	public Pay prepay(@GraphQLArgument("param") ParamPrepay param)throws Exception{

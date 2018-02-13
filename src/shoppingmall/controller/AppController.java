@@ -15,7 +15,6 @@ import shoppingmall.cache.Cache;
 import shoppingmall.dao.DAOUser;
 import shoppingmall.exception.DataValidateException;
 import shoppingmall.po.User;
-import shoppingmall.pub.Environment;
 
 @Controller
 @RequestMapping("/app")
@@ -27,16 +26,14 @@ public class AppController extends MainController  {
 	
 	@RequestMapping(value="Query")
 	public void doQuery(HttpServletRequest request, HttpServletResponse response)throws Exception{
-		Environment env = getEnvironment(request);
 		PrintWriter out = response.getWriter();
-		execute(request, new AppQuery(env), "Query", out);
+		execute(request, new AppQuery(), "Query", out);
 	}
 	
 	@RequestMapping(value="Mutation")
 	public void doMutation(HttpServletRequest request, HttpServletResponse response)throws Exception{
-		Environment env = getEnvironment(request);
 		PrintWriter out = response.getWriter();
-		execute(request, new AppMutation(env), "Mutation", out);
+		execute(request, new AppMutation(), "Mutation", out);
 	}
 
 	@Override

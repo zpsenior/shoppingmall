@@ -7,17 +7,12 @@ import shoppingmall.input.ParamGoodsOrderRefund;
 import shoppingmall.po.GoodsOrder;
 import shoppingmall.po.GoodsOrderRefund;
 import shoppingmall.pub.BOBase;
-import shoppingmall.pub.Environment;
 import graphql4j.annotation.GraphQLArgument;
 import graphql4j.annotation.GraphQLField;
 import graphql4j.annotation.GraphQLObject;
 
 @GraphQLObject("MGoodsRefund")
 public class AppMutationGoodsRefund extends BOBase {
-	
-	public AppMutationGoodsRefund(Environment env) {
-		super(env);
-	}
 
 	private long nextRefundseq(DAOGoodsRefund daoGoodsRefund)throws Exception{
 		Long key = daoGoodsRefund.getMaxRefundseq();

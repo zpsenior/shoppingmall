@@ -1,39 +1,27 @@
 package shoppingmall.pub;
 
-import java.util.List;
 
+import shoppingmall.controller.Environment;
 import shoppingmall.dao.DAO;
 
 public class BOBase {
-
-	private Environment env;
 	
 	private DAO dao;
+	private Environment env;
 	
-	public BOBase(Environment env){
-		this.env = env;
-		this.dao = new DAO(env.getSession());
+	public BOBase(){
+		this.dao = new DAO(getEnvironment().getSession());
 	}
 	
 	protected Environment getEnvironment(){
+		if(env == null){
+			env = Environment.getInstance();
+		}
 		return env;
 	}
 	
-	protected void bindEnvironment(List<? extends POBase> list){
-		if(list != null){
-			for(POBase po : list){
-				bindEnvironment(po);
-			}
-		}
-	}
-	
-	protected void bindEnvironment(POBase po){
-		if(po != null){
-			po.bindEnvironment(env);
-		}
-	}
 
-	public DAO getDAO() {
+	protected DAO getDAO() {
 		return dao;
 	}
 }

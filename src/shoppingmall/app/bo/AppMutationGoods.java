@@ -5,17 +5,12 @@ import shoppingmall.exception.ValidationException;
 import shoppingmall.input.ParamGoods;
 import shoppingmall.po.Goods;
 import shoppingmall.pub.BOBase;
-import shoppingmall.pub.Environment;
 import graphql4j.annotation.GraphQLArgument;
 import graphql4j.annotation.GraphQLField;
 import graphql4j.annotation.GraphQLObject;
 
 @GraphQLObject("MGoods")
 public class AppMutationGoods extends BOBase {
-	
-	public AppMutationGoods(Environment env) {
-		super(env);
-	}
 
 	@GraphQLField("publish")
 	public boolean publish(@GraphQLArgument("goods") ParamGoods goods)throws Exception{

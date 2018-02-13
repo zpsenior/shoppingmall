@@ -19,7 +19,6 @@ import org.apache.ibatis.session.SqlSession;
 import shoppingmall.cache.Cache;
 import shoppingmall.exception.ValidationException;
 import shoppingmall.interceptor.Const;
-import shoppingmall.pub.Environment;
 
 public abstract class MainController implements Const {
 
@@ -56,10 +55,15 @@ public abstract class MainController implements Const {
 			throw new ValidationException("no.find.opt.name", action);
 		}
 		opt.clearValues();
+		initEnvironment(request);
 		bindValue(opt, request);
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
-		exec.execute(opt, rootObj, schema.getType(name), pw);
+		try{
+			exec.execute(opt, rootObj, schema.getType(name), pw);
+		}finally{
+			//Environment.clearEnvironment();
+		}
 		out.print(pw.toString());
 	}
 
@@ -72,15 +76,10 @@ public abstract class MainController implements Const {
 		}
 	}
 	
-	protected Environment getEnvironment(HttpServletRequest request)throws Exception{
-		Environment env = (Environment)request.getAttribute(GRAPHQL_ENVIRONMENT);
-		if(env == null){
-			SqlSession sec = (SqlSession)request.getAttribute(DB_SESSION);
-			Cache cache = (Cache)request.getAttribute(DB_CACHE);
-			env = new Environment(sec, cache, getUser(request));
-			request.setAttribute(GRAPHQL_ENVIRONMENT, env);
-		}
-		return env;
+	private void initEnvironment(HttpServletRequest request)throws Exception{
+		SqlSession sec = (SqlSession)request.getAttribute(DB_SESSION);
+		Cache cache = (Cache)request.getAttribute(DB_CACHE);
+		Environment.addEnvironment(sec, cache, getUser(request));
 	}
 
 	protected abstract Object getUser(HttpServletRequest request)throws Exception;

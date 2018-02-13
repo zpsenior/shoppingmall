@@ -13,7 +13,6 @@ import shoppingmall.admin.bo.AdminMutation;
 import shoppingmall.admin.bo.AdminQuery;
 import shoppingmall.exception.DataValidateException;
 import shoppingmall.po.Admin;
-import shoppingmall.pub.Environment;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,16 +24,14 @@ public class AdminController extends MainController {
 	
 	@RequestMapping(value="Query")
 	public void doQuery(HttpServletRequest request, HttpServletResponse response)throws Exception{
-		Environment env = getEnvironment(request);
 		PrintWriter out = response.getWriter();
-		execute(request, new AdminQuery(env), "Query", out);
+		execute(request, new AdminQuery(), "Query", out);
 	}
 	
 	@RequestMapping(value="Mutation")
 	public void doMutation(HttpServletRequest request, HttpServletResponse response)throws Exception{
-		Environment env = getEnvironment(request);
 		PrintWriter out = response.getWriter();
-		execute(request, new AdminMutation(env), "Mutation", out);
+		execute(request, new AdminMutation(), "Mutation", out);
 	}
 
 	@Override

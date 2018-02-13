@@ -77,7 +77,6 @@ public class GoodsOrderItem extends POBase {
 
 	public Goods getGoods()throws Exception{
 		Goods goods = getDAO().getDAOGoods().getGoods(goodsseq);
-		goods.bindEnvironment(getEnvironment());
 		return goods;
 	}
 	
@@ -86,7 +85,6 @@ public class GoodsOrderItem extends POBase {
 		params.setOrderseq(orderseq);
 		params.setGoodsseq(goodsseq);
 		List<GoodsOrderRefund> list = getDAO().getDAOGoodsRefund().queryGoodsRefundList(params);
-		bindEnvironment(list);
 		return list;
 	}
 }

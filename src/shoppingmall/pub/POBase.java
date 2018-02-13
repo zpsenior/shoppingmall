@@ -1,8 +1,8 @@
 package shoppingmall.pub;
 
 import java.util.Date;
-import java.util.List;
 
+import shoppingmall.controller.Environment;
 import shoppingmall.dao.DAO;
 
 public abstract class POBase {
@@ -16,28 +16,19 @@ public abstract class POBase {
 		this.createtime = createtime;
 	}
 	
-	private Environment env;
 	private DAO dao;
+	private Environment env;
 	
 	protected Environment getEnvironment(){
-		return env;
-	}
-	
-	public void bindEnvironment(Environment env){
-		this.env = env;
-	}
-	
-	protected void bindEnvironment(List<? extends POBase> list){
-		if(list != null){
-			for(POBase po : list){
-				po.bindEnvironment(env);
-			}
+		if(env == null){
+			env = Environment.getInstance();
 		}
+		return env;
 	}
 
 	protected DAO getDAO() {
 		if(dao == null){
-			dao = new DAO(env.getSession());
+			dao = new DAO(getEnvironment().getSession());
 		}
 		return dao;
 	}

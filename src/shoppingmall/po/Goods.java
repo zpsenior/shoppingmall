@@ -135,19 +135,16 @@ public class Goods extends POBase implements Serializable {
 	
 	public User getSeller()throws Exception{
 		User user = getDAO().getDAOUser().getUserBySeq(sellerseq);
-		user.bindEnvironment(getEnvironment());
 		return user;
 	}
 	
 	public List<Goods> getItems()throws Exception{
 		List<Goods> list = getDAO().getDAOGoods().queryGoodsItemList(goodsseq);
-		bindEnvironment(list);
 		return list;
 	}
 	
 	public GoodsSort getGoodsSort()throws Exception{
 		GoodsSort sort = getDAO().getDAOGoods().getGoodsSort(goodsseq);
-		sort.bindEnvironment(getEnvironment());
 		return sort;
 	}
 }

@@ -25,7 +25,6 @@ public class GoodsFavorite extends POBase {
 	
 	public Goods getGoods()throws Exception{
 		Goods goods = getDAO().getDAOGoods().getGoods(goodsseq);
-		goods.bindEnvironment(getEnvironment());
 		return goods;
 	}
 	
