@@ -40,9 +40,9 @@ public abstract class MainController implements Const {
 		return bos.toString();
 	}
 	
-	protected void init(String operationFile, String[] classNames)throws Exception{
+	protected void init(String operationFile, Class<?>[] classes)throws Exception{
 		GraphQLSchemaLoader loader = new GraphQLSchemaLoader();
-		schema = loader.load(classNames);
+		schema = loader.load(classes);
 		GraphQLBuilder builder = new GraphQLBuilder(schema);
 		gql = builder.build(readResource(operationFile));
 		exec = new GraphQLExecute(schema);

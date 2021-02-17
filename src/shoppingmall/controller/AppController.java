@@ -21,7 +21,7 @@ import shoppingmall.po.User;
 public class AppController extends MainController  {
 	
 	public AppController()throws Exception{
-		init("shoppingmall/config/app.sdl", new String[]{AppQuery.class.getName(), AppMutation.class.getName()});
+		init("shoppingmall/config/app.sdl", new Class<?>[]{AppQuery.class, AppMutation.class});
 	}
 	
 	@RequestMapping(value="Query")

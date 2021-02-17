@@ -19,7 +19,7 @@ import shoppingmall.po.Admin;
 public class AdminController extends MainController {
 	
 	public AdminController()throws Exception{
-		init("shoppingmall/config/admin.sdl", new String[]{AdminQuery.class.getName(), AdminMutation.class.getName()});
+		init("shoppingmall/config/admin.sdl", new Class<?>[]{AdminQuery.class, AdminMutation.class});
 	}
 	
 	@RequestMapping(value="Query")
